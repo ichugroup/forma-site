@@ -4,140 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Forma — Software that makes companies money</title>
-<meta name="description" content="Websites, web apps, and custom software. Fixed-price, fast, and proven on real businesses.">
+<meta name="description" content="Websites, web apps, and custom software. Fixed-price, fast, and proven on real businesses we run ourselves.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
-<style>
-:root{
-  --paper:#F7F6F3; --paper-2:#FFFFFF; --ink:#14140F; --ink-70:rgba(20,20,15,.66);
-  --ink-45:rgba(20,20,15,.45); --line:rgba(20,20,15,.10); --accent:#2D45F0; --accent-soft:#EAEDFE;
-  --radius:20px; --maxw:1120px;
-  --sans:'Inter',-apple-system,system-ui,sans-serif; --serif:'Newsreader',Georgia,serif;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
-.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
-a{color:inherit;text-decoration:none}
-.eyebrow{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-45)}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:100px;font-weight:600;font-size:15px;transition:.18s;border:1px solid transparent;cursor:pointer}
-.btn-primary{background:var(--ink);color:var(--paper)}
-.btn-primary:hover{transform:translateY(-1px);opacity:.92}
-.btn-ghost{background:transparent;border-color:var(--line);color:var(--ink)}
-.btn-ghost:hover{border-color:var(--ink)}
-
-/* nav */
-header{position:sticky;top:0;z-index:50;background:rgba(247,246,243,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-nav{display:flex;align-items:center;justify-content:space-between;height:68px}
-.brand{font-weight:700;font-size:20px;letter-spacing:-.02em;display:flex;align-items:center;gap:9px}
-.brand .dot{width:10px;height:10px;border-radius:3px;background:var(--accent);display:inline-block}
-.brand small{font-weight:500;font-size:11px;color:var(--ink-45);letter-spacing:0}
-.nav-links{display:flex;gap:30px;align-items:center;font-size:15px;color:var(--ink-70)}
-.nav-links a:hover{color:var(--ink)}
-.nav-cta{display:flex;gap:12px;align-items:center}
-@media(max-width:860px){.nav-links{display:none}}
-
-/* hero */
-.hero{padding:96px 0 64px}
-.hero h1{font-size:clamp(40px,6vw,72px);line-height:1.02;letter-spacing:-.03em;font-weight:700;max-width:14ch}
-.hero h1 em{font-family:var(--serif);font-style:italic;font-weight:400}
-.hero p.lead{font-size:clamp(17px,2vw,21px);color:var(--ink-70);max-width:54ch;margin-top:26px}
-.hero-cta{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap}
-.hero-meta{display:flex;gap:28px;margin-top:44px;flex-wrap:wrap;color:var(--ink-45);font-size:14px}
-.hero-meta b{color:var(--ink);font-weight:600}
-
-/* logos / proof strip */
-.strip{padding:30px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.strip .wrap{display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:space-between}
-.strip span{color:var(--ink-45);font-size:13px}
-.strip .names{display:flex;gap:26px;flex-wrap:wrap;font-weight:600;color:var(--ink-70);font-size:15px}
-
-/* section */
-section{padding:88px 0}
-.sec-head{max-width:60ch;margin-bottom:48px}
-.sec-head h2{font-size:clamp(30px,4vw,46px);letter-spacing:-.025em;line-height:1.08;margin-top:14px;font-weight:700}
-.sec-head h2 em{font-family:var(--serif);font-style:italic;font-weight:400}
-.sec-head p{color:var(--ink-70);font-size:18px;margin-top:16px}
-
-/* services */
-.grid{display:grid;gap:20px}
-.cards-4{grid-template-columns:repeat(2,1fr)}
-@media(max-width:760px){.cards-4{grid-template-columns:1fr}}
-.card{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius);padding:32px;transition:.2s}
-.card:hover{transform:translateY(-3px);box-shadow:0 18px 40px -24px rgba(20,20,15,.22)}
-.card .num{font-family:var(--serif);font-size:15px;color:var(--accent)}
-.card h3{font-size:23px;letter-spacing:-.02em;margin:14px 0 8px;font-weight:600}
-.card p{color:var(--ink-70);font-size:15.5px}
-.card .price{margin-top:18px;font-size:14px;color:var(--ink-45)}
-.card .price b{color:var(--ink);font-weight:600;font-size:15px}
-
-/* how */
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;counter-reset:s}
-@media(max-width:760px){.steps{grid-template-columns:1fr 1fr}}
-.step{padding:26px;border-radius:16px;background:var(--paper-2);border:1px solid var(--line)}
-.step .k{font-family:var(--serif);font-size:30px;color:var(--accent);line-height:1}
-.step h4{margin:14px 0 6px;font-size:17px;font-weight:600}
-.step p{font-size:14.5px;color:var(--ink-70)}
-
-/* proof */
-.proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-@media(max-width:860px){.proof-grid{grid-template-columns:1fr}}
-.case{background:var(--ink);color:var(--paper);border-radius:var(--radius);padding:32px;display:flex;flex-direction:column;min-height:280px}
-.case .tag{font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.6}
-.case h3{font-size:24px;margin:12px 0;letter-spacing:-.02em;font-weight:600}
-.case p{opacity:.78;font-size:15px;flex:1}
-.case .stat{margin-top:18px;font-family:var(--serif);font-size:30px}
-.case.alt{background:var(--accent)}
-
-/* pricing */
-.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-@media(max-width:860px){.tiers{grid-template-columns:1fr}}
-.tier{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius);padding:30px;display:flex;flex-direction:column}
-.tier.feat{border-color:var(--ink);box-shadow:0 20px 50px -28px rgba(20,20,15,.3)}
-.tier .badge{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
-.tier h3{font-size:20px;margin:8px 0;font-weight:600}
-.tier .amt{font-size:34px;font-weight:700;letter-spacing:-.02em;margin:8px 0}
-.tier .amt span{font-size:15px;font-weight:500;color:var(--ink-45)}
-.tier ul{list-style:none;margin:18px 0;display:flex;flex-direction:column;gap:9px}
-.tier li{font-size:14.5px;color:var(--ink-70);padding-left:24px;position:relative}
-.tier li:before{content:"";position:absolute;left:0;top:7px;width:14px;height:14px;border-radius:50%;background:var(--accent-soft);box-shadow:inset 0 0 0 2px var(--accent)}
-.tier .btn{margin-top:auto;justify-content:center}
-.note{text-align:center;color:var(--ink-45);font-size:14px;margin-top:24px}
-
-/* care */
-.care{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius);padding:40px;display:flex;gap:40px;align-items:center;flex-wrap:wrap}
-.care .l{flex:1;min-width:280px}
-.care h3{font-size:26px;letter-spacing:-.02em;font-weight:700}
-.care p{color:var(--ink-70);margin-top:12px;font-size:16px}
-.care .pill{display:inline-block;background:var(--accent-soft);color:var(--accent);font-weight:600;font-size:13px;padding:6px 14px;border-radius:100px;margin-bottom:8px}
-
-/* faq */
-.faq details{border-bottom:1px solid var(--line);padding:22px 0}
-.faq summary{font-size:18px;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary:after{content:"+";font-size:24px;color:var(--accent);font-weight:400}
-.faq details[open] summary:after{content:"–"}
-.faq p{color:var(--ink-70);margin-top:14px;font-size:15.5px;max-width:70ch}
-
-/* cta band */
-.band{background:var(--ink);color:var(--paper);border-radius:28px;padding:64px 48px;text-align:center}
-.band h2{font-size:clamp(30px,4.5vw,52px);letter-spacing:-.03em;font-weight:700;max-width:18ch;margin:0 auto}
-.band h2 em{font-family:var(--serif);font-style:italic;font-weight:400}
-.band p{opacity:.74;margin:18px auto 0;max-width:48ch;font-size:18px}
-.band .btn-primary{background:var(--paper);color:var(--ink);margin-top:32px}
-
-footer{padding:54px 0 40px;color:var(--ink-45);font-size:14px}
-footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
-.lang{font-size:13px;color:var(--ink-45)}
-.lang a{color:var(--ink);font-weight:600}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-active="convert">
 
 <header>
-  <nav class="wrap">
-    <div class="brand"><span class="dot"></span>Forma <small>(working name)</small></div>
+  <div class="ticker">Now booking — 4 build slots this month · Global &amp; Perú</div>
+  <nav>
+    <a class="brand" href="#top"><span class="dot"></span>Forma <small>(working name)</small></a>
     <div class="nav-links">
       <a href="#services">Services</a>
       <a href="#work">Work</a>
@@ -145,99 +23,112 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
       <a href="#process">Process</a>
       <a href="#faq">FAQ</a>
     </div>
-    <div class="nav-cta">
+    <div class="nav-right">
+      <button class="icon-btn theme-toggle" aria-label="Toggle theme">☀</button>
       <span class="lang">EN · <a href="es.html">ES</a></span>
-      <a href="#contact" class="btn btn-primary">Book a call</a>
+      <a href="#contact" class="btn btn-ghost">Book a call</a>
     </div>
   </nav>
 </header>
 
-<main>
-<section class="hero wrap">
-  <p class="eyebrow">Web · Web apps · Custom software</p>
-  <h1>Software that makes your business <em>money.</em></h1>
-  <p class="lead">We design and build the websites, web apps, and custom software companies actually need — fixed-price, fast, and proven on real businesses we operate ourselves.</p>
-  <div class="hero-cta">
-    <a href="#contact" class="btn btn-primary">Book a 15-min call</a>
-    <a href="#pricing" class="btn btn-ghost">See pricing</a>
-  </div>
-  <div class="hero-meta">
-    <div><b>5 days</b> to a live landing</div>
-    <div><b>Fixed price</b>, no surprises</div>
-    <div><b>Free support</b> after launch</div>
-    <div><b>Real proof</b>, not mockups</div>
+<main id="top">
+<section class="hero" data-active="convert">
+  <div class="bg"></div>
+  <div class="wrap">
+    <p class="eyebrow">Web · Web apps · Custom software</p>
+    <h1>Software that makes your business <span class="swap">convert.</span></h1>
+    <p class="lead">We design and build the websites, web apps, and custom software companies actually need — fixed-price, fast, and proven on real businesses we operate ourselves.</p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn btn-solid">Book a 15-min call <span class="arw">→</span></a>
+      <a href="#pricing" class="btn btn-ghost">See pricing</a>
+    </div>
+    <div class="conduct">
+      <button class="on" data-k="convert" data-word="convert.">Landing pages</button>
+      <button data-k="grow" data-word="grow.">Websites</button>
+      <button data-k="run" data-word="run itself.">Web apps</button>
+      <button data-k="scale" data-word="scale.">Custom software</button>
+    </div>
   </div>
 </section>
 
-<div class="strip">
+<div class="strip reveal">
   <div class="wrap">
-    <span>Software we build &amp; operate every day</span>
+    <span class="lbl">Software we build &amp; operate every day</span>
     <div class="names"><span>Casa Ichu</span><span>Piano Piano</span><span>Paradiso</span><span>Ichu Platform</span></div>
   </div>
 </div>
 
 <section id="services">
   <div class="wrap">
-    <div class="sec-head">
+    <div class="sec-head reveal">
       <p class="eyebrow">What we build</p>
       <h2>Four ways we turn software into <em>revenue.</em></h2>
-      <p>Start with a page, grow into an app, scale into custom software. Same team, fixed prices, one continuous relationship.</p>
+      <p class="sub">Start with a page, grow into an app, scale into custom software. Same team, fixed prices, one continuous relationship.</p>
     </div>
-    <div class="grid cards-4">
-      <div class="card"><div class="num">01</div><h3>Landing pages</h3><p>One conversion-focused page that turns clicks into bookings and leads. Live in 3–5 days.</p><div class="price"><b>from $1,500</b> / S/900</div></div>
-      <div class="card"><div class="num">02</div><h3>Full websites</h3><p>Multi-page marketing sites with copy, SEO, and lead capture built to convert — not just look nice.</p><div class="price"><b>from $4,500</b> / S/2,500</div></div>
-      <div class="card"><div class="num">03</div><h3>Web apps</h3><p>Dashboards, booking systems, portals, and internal tools that replace spreadsheets and manual work.</p><div class="price"><b>from $6,000</b></div></div>
-      <div class="card"><div class="num">04</div><h3>Custom software</h3><p>Bespoke business apps built from a paid discovery sprint — you get a working prototype and a fixed quote.</p><div class="price"><b>discovery from $5,000</b></div></div>
+    <div class="tiles">
+      <div class="tile invert reveal"><div class="n">01</div><h3>Landing pages</h3><p>One conversion-focused page that turns clicks into bookings and leads. Live in 3–5 days.</p><div class="price"><b>from $1,500</b> · S/900</div></div>
+      <div class="tile reveal"><div class="n">02</div><h3>Full websites</h3><p>Multi-page marketing sites with copy, SEO, and lead capture built to convert — not just to look nice.</p><div class="price"><b>from $4,500</b> · S/2,500</div></div>
+      <div class="tile reveal"><div class="n">03</div><h3>Web apps</h3><p>Dashboards, booking systems, portals, and internal tools that replace spreadsheets and manual work.</p><div class="price"><b>from $6,000</b></div></div>
+      <div class="tile invert reveal"><div class="n">04</div><h3>Custom software</h3><p>Bespoke business apps from a paid discovery sprint — you walk away with a working prototype and a fixed quote.</p><div class="price"><b>discovery from $5,000</b></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="work" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Selected work</p>
+      <h2>We don't demo software. We <em>run</em> it.</h2>
+      <p class="sub">A multi-venue hospitality group runs its entire operation on software we built and maintain. Filter by what you need.</p>
+    </div>
+    <div class="filters reveal">
+      <button class="on" data-f="all">All</button>
+      <button data-f="sites">Websites</button>
+      <button data-f="apps">Web apps</button>
+      <button data-f="custom">Custom</button>
+    </div>
+    <div class="work">
+      <div class="case reveal" data-cat="apps"><div class="media"><span class="k">CRM</span></div><div class="meta"><span class="tag">Hospitality · Web app</span><h3>Ichu CRM &amp; Kiosk</h3><p>Reservations, cash close, RBAC, and self-service kiosks across multiple restaurants — in production daily.</p><div class="stat">Multi-venue</div></div></div>
+      <div class="case reveal" data-cat="apps"><div class="media"><span class="k">Kardex</span></div><div class="meta"><span class="tag">Operations · Web app</span><h3>Kardex / Inventory</h3><p>Food-cost, purchasing, payments, and inventory control replacing spreadsheets for a real kitchen.</p><div class="stat">Real-time</div></div></div>
+      <div class="case reveal" data-cat="custom"><div class="media"><span class="k">Staff</span></div><div class="meta"><span class="tag">HR · Custom software</span><h3>Staff &amp; SST Platform</h3><p>Scheduling, payroll docs, compliance, and a worker app — bespoke software for a 90-person operation.</p><div class="stat">90+ workers</div></div></div>
+      <div class="case reveal" data-cat="sites"><div class="media"><span class="k">Casa Ichu</span></div><div class="meta"><span class="tag">Brand · Website</span><h3>Casa Ichu</h3><p>A conversion site + reservation flow that captures bookings with a deposit instead of losing no-shows.</p><div class="stat">Bookings ↑</div></div></div>
+      <div class="case reveal" data-cat="sites"><div class="media"><span class="k">Piano</span></div><div class="meta"><span class="tag">Brand · Website</span><h3>Piano Piano</h3><p>Osteria brand site with menu, story, and reservations — fast, mobile-first, on-brand.</p><div class="stat">5-day build</div></div></div>
+      <div class="case reveal" data-cat="sites"><div class="media"><span class="k">Paradiso</span></div><div class="meta"><span class="tag">Brand · Website</span><h3>Paradiso</h3><p>Venue site tuned for discovery and bookings, sharing one design system with the group.</p><div class="stat">Shared system</div></div></div>
     </div>
   </div>
 </section>
 
 <section id="process" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-head">
+    <div class="sec-head reveal">
       <p class="eyebrow">How it works</p>
       <h2>Fast, fixed, and <em>de-risked.</em></h2>
     </div>
     <div class="steps">
-      <div class="step"><div class="k">1</div><h4>Scope &amp; deposit</h4><p>We lock the scope and price. 50% deposit to start — no hourly surprises.</p></div>
-      <div class="step"><div class="k">2</div><h4>Build in days</h4><p>You see progress fast. Landings in 5 days, sites in 1–2 weeks, apps in weeks.</p></div>
-      <div class="step"><div class="k">3</div><h4>Launch</h4><p>We ship it live, tested in a real browser, fast, and converting.</p></div>
-      <div class="step"><div class="k">4</div><h4>Free support, then care</h4><p>Free support after launch. Then an optional plan keeps it fast and updated.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="work">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow">Proof</p>
-      <h2>We don't demo software. We <em>run</em> it.</h2>
-      <p>A multi-venue hospitality group runs its entire operation on software we built and maintain.</p>
-    </div>
-    <div class="proof-grid">
-      <div class="case"><span class="tag">Hospitality · CRM</span><h3>Ichu CRM &amp; Kiosk</h3><p>Reservations, cash close, RBAC, and self-service kiosks across multiple restaurants — live in production daily.</p><div class="stat">Multi-venue</div></div>
-      <div class="case alt"><span class="tag">Operations · Web app</span><h3>Kardex / Inventory</h3><p>Food-cost, purchasing, payments, and inventory control replacing spreadsheets for a real kitchen operation.</p><div class="stat">Real-time</div></div>
-      <div class="case"><span class="tag">Brand · Websites</span><h3>Casa Ichu · Piano · Paradiso</h3><p>Restaurant brands with conversion sites and reservation flows that capture bookings instead of losing them.</p><div class="stat">3 brands</div></div>
+      <div class="step reveal"><div class="k">1</div><h4>Scope &amp; deposit</h4><p>We lock the scope and price. 50% deposit to start — no hourly surprises.</p></div>
+      <div class="step reveal"><div class="k">2</div><h4>Build in days</h4><p>You see progress fast. Landings in 5 days, sites in 1–2 weeks, apps in weeks.</p></div>
+      <div class="step reveal"><div class="k">3</div><h4>Launch</h4><p>We ship it live, tested in a real browser — fast, mobile, and converting.</p></div>
+      <div class="step reveal"><div class="k">4</div><h4>Free support, then care</h4><p>Free support after launch. Then an optional plan keeps it fast and updated.</p></div>
     </div>
   </div>
 </section>
 
 <section id="pricing" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-head">
+    <div class="sec-head reveal">
       <p class="eyebrow">Pricing</p>
-      <h2>Published, fixed, mid-market.</h2>
-      <p>Most agencies hide their prices. We don't. Global pricing shown; Peru priced in soles. Same build, priced to your market.</p>
+      <h2>Published, fixed, <em>mid-market.</em></h2>
+      <p class="sub">Most agencies hide their prices. We don't. Global pricing shown; Peru priced in soles — same build, priced to your market.</p>
     </div>
     <div class="tiers">
-      <div class="tier"><span class="badge">Launch</span><h3>Landing page</h3><div class="amt">$1,500<span> / S/900–1,400</span></div>
-        <ul><li>1 conversion page</li><li>Copy + mobile-first</li><li>Lead / WhatsApp capture</li><li>Analytics + live in 3–5 days</li></ul>
+      <div class="pt reveal"><span class="badge">Launch</span><h3>Landing page</h3><div class="amt">$1,500<span>S/900–1,400 · live in 3–5 days</span></div>
+        <ul><li>1 conversion page</li><li>Copy + mobile-first</li><li>Lead / WhatsApp capture</li><li>Analytics installed</li></ul>
         <a href="#contact" class="btn btn-ghost">Start</a></div>
-      <div class="tier feat"><span class="badge">Growth · most popular</span><h3>Full website</h3><div class="amt">$4,500<span> / S/2,500–3,500</span></div>
-        <ul><li>5–8 pages + copy</li><li>On-page SEO + schema</li><li>Lead capture + GBP</li><li>Live in 1–2 weeks</li></ul>
-        <a href="#contact" class="btn btn-primary">Start</a></div>
-      <div class="tier"><span class="badge">Build</span><h3>Web app / Custom</h3><div class="amt">from $6,000<span></span></div>
-        <ul><li>Booking, portal, dashboard, tools</li><li>Paid discovery sprint for custom</li><li>Prototype + fixed quote</li><li>Milestone billing</li></ul>
+      <div class="pt feat reveal"><span class="badge">Growth · most popular</span><h3>Full website</h3><div class="amt">$4,500<span>S/2,500–3,500 · 1–2 weeks</span></div>
+        <ul><li>5–8 pages + copy</li><li>On-page SEO + schema</li><li>Lead capture + Google Business</li><li>Free support window</li></ul>
+        <a href="#contact" class="btn btn-solid">Start <span class="arw">→</span></a></div>
+      <div class="pt reveal"><span class="badge">Build</span><h3>Web app / Custom</h3><div class="amt">from $6,000<span>discovery sprint from $5,000</span></div>
+        <ul><li>Booking, portal, dashboard, tools</li><li>Paid discovery for custom</li><li>Prototype + fixed quote</li><li>Milestone billing</li></ul>
         <a href="#contact" class="btn btn-ghost">Book discovery</a></div>
     </div>
     <p class="note">Every project includes a free support window after launch (30–60 days), then an optional care plan from $300/mo.</p>
@@ -246,48 +137,45 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
 
 <section id="care" style="padding-top:0">
   <div class="wrap">
-    <div class="care">
+    <div class="care reveal">
       <div class="l">
         <span class="pill">After launch</span>
         <h3>Free support first. Then we keep it running.</h3>
         <p>Every build comes with free support after delivery — bugs, tweaks, peace of mind. When it ends, an optional Care or App-SLA plan keeps your site or app fast, updated, and supported. Cancel anytime.</p>
       </div>
-      <a href="#contact" class="btn btn-primary">See care plans</a>
+      <a href="#contact" class="btn btn-solid">See care plans <span class="arw">→</span></a>
     </div>
   </div>
 </section>
 
 <section id="faq" style="padding-top:0">
-  <div class="wrap" style="max-width:820px">
-    <div class="sec-head"><p class="eyebrow">FAQ</p><h2>The honest answers.</h2></div>
+  <div class="wrap">
+    <div class="sec-head reveal" style="text-align:center;margin:0 auto 48px"><p class="eyebrow">FAQ</p><h2>The honest answers.</h2></div>
     <div class="faq">
-      <details open><summary>How fast can you deliver?</summary><p>A landing page goes live in 3–5 days, a full website in 1–2 weeks, and web apps in a few weeks depending on scope. Custom software starts with a 1–2 week paid discovery sprint so you know exactly what you're getting before the build.</p></details>
-      <details><summary>What does it cost, really?</summary><p>Fixed prices, published above. Landings from $1,500 (S/900 in Peru), websites from $4,500, web apps from $6,000, custom builds quoted from a discovery sprint. 50% deposit to start, balance on delivery. No hourly billing.</p></details>
-      <details><summary>What if you build it and disappear?</summary><p>You get free support after launch, then an optional care plan. We run software in production for a real business every day — abandoning clients isn't how we work.</p></details>
-      <details><summary>Do you only do websites?</summary><p>No. The four lines are a ladder — landing, website, web app, custom software — so we grow with you instead of handing you off.</p></details>
-      <details><summary>Can you prove it works?</summary><p>We operate the CRM, inventory, kiosks, and websites for a multi-venue hospitality group. Real software, in daily use — ask and we'll walk you through it.</p></details>
+      <details open class="reveal"><summary>How fast can you deliver?</summary><p>A landing page goes live in 3–5 days, a full website in 1–2 weeks, and web apps in a few weeks depending on scope. Custom software starts with a 1–2 week paid discovery sprint so you know exactly what you're getting before the build.</p></details>
+      <details class="reveal"><summary>What does it cost, really?</summary><p>Fixed prices, published above. Landings from $1,500 (S/900 in Peru), websites from $4,500, web apps from $6,000, custom builds quoted from a discovery sprint. 50% deposit to start, balance on delivery. No hourly billing.</p></details>
+      <details class="reveal"><summary>What if you build it and disappear?</summary><p>You get free support after launch, then an optional care plan. We run software in production for a real business every day — abandoning clients isn't how we work.</p></details>
+      <details class="reveal"><summary>Do you only do websites?</summary><p>No. The four lines are a ladder — landing, website, web app, custom software — so we grow with you instead of handing you off.</p></details>
+      <details class="reveal"><summary>Can you prove it works?</summary><p>We operate the CRM, inventory, kiosks, and websites for a multi-venue hospitality group. Real software, in daily use — ask and we'll walk you through it.</p></details>
     </div>
   </div>
 </section>
 
-<section id="contact" style="padding-top:0">
-  <div class="wrap">
-    <div class="band">
-      <h2>Let's build something that <em>pays for itself.</em></h2>
-      <p>Tell us what you need. We'll send a fixed price and a timeline — usually within a day.</p>
-      <a href="https://wa.me/51999999999?text=Hola%2C%20quiero%20una%20web%2Fapp" class="btn btn-primary">Book a 15-min call</a>
-    </div>
-  </div>
+<section id="contact" class="band">
+  <h2>Let's build something that <em>pays for itself.</em></h2>
+  <p>Tell us what you need. We'll send a fixed price and a timeline — usually within a day.</p>
+  <a href="https://wa.me/51999999999?text=Hola%2C%20quiero%20una%20web%2Fapp" class="btn btn-solid">Book a 15-min call <span class="arw">→</span></a>
 </section>
 </main>
 
 <footer>
   <div class="wrap">
-    <div class="brand"><span class="dot"></span>Forma <small>(working name)</small></div>
+    <a class="brand" href="#top"><span class="dot"></span>Forma <small>(working name)</small></a>
     <div>Websites · Web apps · Custom software · Global &amp; Perú</div>
     <div class="lang">EN · <a href="es.html">Español</a></div>
   </div>
 </footer>
 
+<script src="app.js"></script>
 </body>
 </html>
