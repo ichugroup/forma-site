@@ -1,4 +1,9 @@
 /* ===== Forma — dark editorial. MetaLab 80% + Instrument 20%. Tokens from COMBINED-SPEC ===== */
+/* Self-hosted fonts pulled directly from instrument.com */
+@font-face{font-family:'Instrument Sans';src:url(fonts/InstrumentSansVF.woff2) format('woff2-variations'),url(fonts/InstrumentSansVF.woff2) format('woff2');font-weight:400 700;font-style:normal;font-display:swap}
+@font-face{font-family:'Instrument Serif';src:url(fonts/InstrumentSerif-Regular.woff2) format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Instrument Serif';src:url(fonts/InstrumentSerif-Italic.woff2) format('woff2');font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:'Instrument Mono';src:url(fonts/InstrumentSansMono-Regular.woff2) format('woff2');font-weight:400;font-style:normal;font-display:swap}
 :root{
   --bg:#0A0A0A; --bg-pure:#000; --ink:#FFFFFF; --ink-muted:#C7C7C7; --ink-dim:rgba(255,255,255,.5);
   --hairline:rgba(255,255,255,.12); --tile:#EDF1F5; --tile-ink:#14140F; --ghost:rgba(186,186,186,.16);
