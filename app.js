@@ -4,6 +4,18 @@
   // safety: if anything goes wrong, reveal everything after 2.5s so the page is never blank
   setTimeout(function(){ document.querySelectorAll('.reveal:not(.in)').forEach(function(el){ el.classList.add('in'); }); }, 2500);
 
+  // page-load intro — makes the site feel like it "loads" (a website), not just a long scroll
+  (function(){
+    var l = document.createElement('div'); l.className = 'loader';
+    l.innerHTML = '<div class="lw">Forma</div><div class="bar"><i></i></div>';
+    document.body.appendChild(l); document.body.classList.add('loading');
+    requestAnimationFrame(function(){ l.classList.add('show'); });
+    var done = false;
+    function finish(){ if(done) return; done = true; l.classList.add('done'); document.body.classList.remove('loading'); setTimeout(function(){ if(l.parentNode) l.parentNode.removeChild(l); }, 900); }
+    window.addEventListener('load', function(){ setTimeout(finish, 600); });
+    setTimeout(finish, 2600); // safety
+  })();
+
   // nav restyle + ticker hide on scroll
   var header = document.querySelector('header');
   function onScroll(){ if(window.scrollY > 40) header.classList.add('scrolled'); else header.classList.remove('scrolled'); }
@@ -54,9 +66,48 @@
     menu.querySelectorAll('a, .close').forEach(function(a){ a.addEventListener('click', closeMenu); });
   }
 
+  // scroll-driven background tint per section (Instrument-style)
+  var bgDark  = {top:'#0A0A0A',services:'#0A0D14',work:'#0E0A14',process:'#081210',pricing:'#140E08',care:'#0C0A12',faq:'#0A0B0D',contact:'#060606'};
+  var bgLight = {top:'#F7F6F3',services:'#EAF0F7',work:'#F0EAF7',process:'#E8F4EE',pricing:'#F7EFE6',care:'#EFECF6',faq:'#F3F3F1',contact:'#FBFAF8'};
+  var curKey = 'top';
+  function paintBg(){ var m = document.body.classList.contains('light') ? bgLight : bgDark; if(m && m[curKey]) document.body.style.setProperty('--bg', m[curKey]); }
+  var bgIO = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ curKey = e.target.getAttribute('data-bg'); paintBg(); } });
+  }, {rootMargin:'-45% 0px -45% 0px'});
+  document.querySelectorAll('[data-bg]').forEach(function(el){ bgIO.observe(el); });
+
+  // page-like transitions — in-page nav clicks wipe a curtain + jump, so it feels like loading a page
+  var curtain = document.createElement('div'); curtain.className = 'curtain'; document.body.appendChild(curtain);
+  var jumping = false;
+  function pageJump(hash){
+    var t = document.querySelector(hash); if(!t || jumping) return;
+    jumping = true;
+    curtain.classList.add('in');                       // cover (bottom -> full)
+    setTimeout(function(){
+      t.scrollIntoView({block:'start',behavior:'auto'}); // instant jump, hidden behind curtain
+      onScroll();
+      curtain.classList.add('up');                     // reveal upward (full -> top)
+      setTimeout(function(){
+        curtain.style.transition = 'none';
+        curtain.classList.remove('in','up');           // snap back to resting state
+        requestAnimationFrame(function(){ curtain.style.transition = ''; jumping = false; });
+      }, 460);
+    }, 440);
+  }
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var hash = a.getAttribute('href'); if(hash.length < 2) return;
+      var t = document.querySelector(hash); if(!t) return;
+      e.preventDefault();
+      if(menu){ menu.classList.remove('open'); document.body.style.overflow=''; }
+      try{ history.pushState(null,'',hash); }catch(_){}
+      pageJump(hash);
+    });
+  });
+
   // theme toggle (persist)
   var tbtn = document.querySelector('.theme-toggle');
-  function applyTheme(t){ document.body.classList.toggle('light', t==='light'); if(tbtn) tbtn.textContent = t==='light' ? '☾' : '☀'; }
+  function applyTheme(t){ document.body.classList.toggle('light', t==='light'); if(tbtn) tbtn.textContent = t==='light' ? '☾' : '☀'; paintBg(); }
   try{ applyTheme(localStorage.getItem('forma-theme')||'dark'); }catch(e){}
   if(tbtn) tbtn.addEventListener('click', function(){
     var t = document.body.classList.contains('light') ? 'dark' : 'light';
