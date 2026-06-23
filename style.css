@@ -67,8 +67,8 @@ body.light header.scrolled nav{background:rgba(247,246,243,.75)}
 .hero[data-active="grow"] .bg{background:radial-gradient(60% 80% at 75% 30%,rgba(60,200,140,.16),transparent 70%)}
 .hero[data-active="run"] .bg{background:radial-gradient(60% 80% at 75% 30%,rgba(255,150,60,.15),transparent 70%)}
 .hero[data-active="scale"] .bg{background:radial-gradient(60% 80% at 75% 30%,rgba(200,90,220,.16),transparent 70%)}
-.hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(60px,15vw,270px);line-height:.82;letter-spacing:-.05em;max-width:14ch;margin:18px 0 0}
-.hero h1 .swap{font-style:italic;transition:opacity .35s var(--ease)}
+.hero h1{font-family:var(--sans);font-weight:700;text-transform:uppercase;font-size:clamp(48px,10vw,154px);line-height:.93;letter-spacing:-.035em;max-width:15ch;margin:20px 0 0}
+.hero h1 .swap{transition:opacity .35s var(--ease)}
 .hero .lead{font-size:clamp(16px,1.7vw,20px);color:var(--ink-muted);max-width:52ch;margin-top:28px}
 .hero-cta{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
 .conduct{display:flex;gap:8px;flex-wrap:wrap;margin-top:46px;border-top:1px solid var(--hairline);padding-top:22px}
