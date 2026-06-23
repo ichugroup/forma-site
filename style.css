@@ -62,7 +62,7 @@ body.light header.scrolled nav{background:rgba(247,246,243,.75)}
 .hero[data-active="grow"] .bg{background:radial-gradient(60% 80% at 75% 30%,rgba(60,200,140,.16),transparent 70%)}
 .hero[data-active="run"] .bg{background:radial-gradient(60% 80% at 75% 30%,rgba(255,150,60,.15),transparent 70%)}
 .hero[data-active="scale"] .bg{background:radial-gradient(60% 80% at 75% 30%,rgba(200,90,220,.16),transparent 70%)}
-.hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(56px,10.5vw,172px);line-height:.88;letter-spacing:-.045em;max-width:15ch;margin:22px 0 0}
+.hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(68px,13.5vw,248px);line-height:.84;letter-spacing:-.05em;max-width:13ch;margin:18px 0 0}
 .hero h1 .swap{font-style:italic;transition:opacity .35s var(--ease)}
 .hero .lead{font-size:clamp(16px,1.7vw,20px);color:var(--ink-muted);max-width:52ch;margin-top:28px}
 .hero-cta{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
@@ -79,7 +79,7 @@ body.light header.scrolled nav{background:rgba(247,246,243,.75)}
 /* sections */
 section{padding:clamp(72px,11vw,140px) 0}
 .sec-head{max-width:60ch;margin-bottom:54px}
-.sec-head h2{font-family:var(--serif);font-weight:400;font-size:clamp(36px,6vw,88px);line-height:.95;letter-spacing:-.035em;margin-top:14px}
+.sec-head h2{font-family:var(--serif);font-weight:400;font-size:clamp(40px,7.5vw,116px);line-height:.92;letter-spacing:-.04em;margin-top:14px}
 .sec-head .sub,.tile p,.case p,.care p,.faq p,.hero .lead,.band p{letter-spacing:.012em}
 .sec-head h2 em{font-style:italic}
 .sec-head .sub{color:var(--ink-muted);font-size:18px;margin-top:18px;max-width:54ch}
