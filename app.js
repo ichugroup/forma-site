@@ -41,6 +41,15 @@
     });
   });
 
+  // mobile overlay menu
+  var menu = document.querySelector('.navmenu');
+  var burger = document.querySelector('.burger');
+  function closeMenu(){ if(menu){ menu.classList.remove('open'); document.body.style.overflow=''; } }
+  if(burger && menu){
+    burger.addEventListener('click', function(){ menu.classList.add('open'); document.body.style.overflow='hidden'; });
+    menu.querySelectorAll('a, .close').forEach(function(a){ a.addEventListener('click', closeMenu); });
+  }
+
   // theme toggle (persist)
   var tbtn = document.querySelector('.theme-toggle');
   function applyTheme(t){ document.body.classList.toggle('light', t==='light'); if(tbtn) tbtn.textContent = t==='light' ? '☾' : '☀'; }
