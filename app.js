@@ -66,13 +66,10 @@
     menu.querySelectorAll('a, .close').forEach(function(a){ a.addEventListener('click', closeMenu); });
   }
 
-  // scroll-driven background tint per section (Instrument-style)
-  var bgDark  = {top:'#0A0A0A',services:'#0A0D14',work:'#0E0A14',process:'#081210',pricing:'#140E08',care:'#0C0A12',faq:'#0A0B0D',contact:'#060606'};
-  var bgLight = {top:'#F7F6F3',services:'#EAF0F7',work:'#F0EAF7',process:'#E8F4EE',pricing:'#F7EFE6',care:'#EFECF6',faq:'#F3F3F1',contact:'#FBFAF8'};
-  var curKey = 'top';
-  function paintBg(){ var m = document.body.classList.contains('light') ? bgLight : bgDark; if(m && m[curKey]) document.body.style.setProperty('--bg', m[curKey]); }
+  // scroll-driven light<->dark section flip — exact Instrument palette (#fff <-> #070708)
+  var themeMap = {top:'dark',services:'light',work:'dark',process:'light',pricing:'dark',care:'light',faq:'dark',contact:'light'};
   var bgIO = new IntersectionObserver(function(es){
-    es.forEach(function(e){ if(e.isIntersecting){ curKey = e.target.getAttribute('data-bg'); paintBg(); } });
+    es.forEach(function(e){ if(e.isIntersecting){ document.body.classList.toggle('light', themeMap[e.target.getAttribute('data-bg')] === 'light'); } });
   }, {rootMargin:'-45% 0px -45% 0px'});
   document.querySelectorAll('[data-bg]').forEach(function(el){ bgIO.observe(el); });
 
@@ -105,12 +102,4 @@
     });
   });
 
-  // theme toggle (persist)
-  var tbtn = document.querySelector('.theme-toggle');
-  function applyTheme(t){ document.body.classList.toggle('light', t==='light'); if(tbtn) tbtn.textContent = t==='light' ? '☾' : '☀'; paintBg(); }
-  try{ applyTheme(localStorage.getItem('forma-theme')||'dark'); }catch(e){}
-  if(tbtn) tbtn.addEventListener('click', function(){
-    var t = document.body.classList.contains('light') ? 'dark' : 'light';
-    applyTheme(t); try{ localStorage.setItem('forma-theme', t); }catch(e){}
-  });
 })();
