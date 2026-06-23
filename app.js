@@ -1,5 +1,9 @@
 // Forma — interactions: nav scroll, reveal, conduct-hero, work filter, theme toggle
 (function(){
+  document.documentElement.classList.add('js'); // reveals only hide when JS is alive
+  // safety: if anything goes wrong, reveal everything after 2.5s so the page is never blank
+  setTimeout(function(){ document.querySelectorAll('.reveal:not(.in)').forEach(function(el){ el.classList.add('in'); }); }, 2500);
+
   // nav restyle + ticker hide on scroll
   var header = document.querySelector('header');
   function onScroll(){ if(window.scrollY > 40) header.classList.add('scrolled'); else header.classList.remove('scrolled'); }
