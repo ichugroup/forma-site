@@ -19,11 +19,11 @@ html{scroll-behavior:auto}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;letter-spacing:.005em;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .6s var(--ease),color .6s var(--ease)}
 
 /* ===== page router — each nav target is its own screen, no long scroll ===== */
-main>section,main>.strip{display:none}
+body.routed main>section,body.routed main>.strip{display:none}
 body.routed main>section{padding-top:clamp(116px,15vh,168px)!important;padding-bottom:clamp(72px,11vw,128px);min-height:100vh}
-main>.page-on{display:block}
-main>.hero.page-on{display:flex}
-main>.strip.page-on{display:block}
+body.routed main>section.page-on{display:block}
+body.routed main>.strip.page-on{display:block}
+body.routed main>.hero.page-on{display:flex;min-height:calc(100vh - 60px)}
 @keyframes screenIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 html.js body.routed main>.page-on{animation:screenIn .5s var(--ease) both}
 .nav-links a.active,.navmenu a.active{color:var(--ink)}
