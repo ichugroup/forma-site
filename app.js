@@ -112,65 +112,83 @@
     menu.querySelectorAll('a, .close').forEach(function(a){ a.addEventListener('click', closeMenu); });
   }
 
-  // manual theme toggle — pins a colour (overrides scroll flip) until you navigate
-  var tbtn = document.querySelector('.theme-toggle');
-  if(tbtn) tbtn.addEventListener('click', function(){
-    manualTheme = document.body.classList.contains('light') ? 'dark' : 'light';
-    applyTheme(manualTheme);
-  });
+  var ES = document.documentElement.lang==='es';
 
   // ===== Cal.com-style booking modal (mockup — swap for real Cal.com embed once the account exists) =====
   var calModal = document.querySelector('.cal-modal');
-  function openCal(){ if(!calModal) return; calModal.removeAttribute('hidden'); document.body.style.overflow='hidden'; requestAnimationFrame(function(){ calModal.classList.add('open'); }); buildCal(); }
+  var bookingTopic = '';
+  function openCal(topic){
+    if(!calModal) return;
+    bookingTopic = topic || '';
+    var sub = calModal.querySelector('.cal-topic');
+    if(sub) sub.textContent = bookingTopic ? (ES?'Sobre: ':'About: ')+bookingTopic : '';
+    calModal.removeAttribute('hidden'); document.body.style.overflow='hidden';
+    requestAnimationFrame(function(){ calModal.classList.add('open'); }); buildCal();
+  }
   function closeCal(){ if(!calModal) return; calModal.classList.remove('open'); document.body.style.overflow=''; setTimeout(function(){ calModal.setAttribute('hidden',''); }, 260); }
   window.openCal = openCal;
   if(calModal){
     calModal.addEventListener('click', function(e){ if(e.target===calModal || e.target.closest('.cal-x')) closeCal(); });
     document.addEventListener('keydown', function(e){ if(e.key==='Escape' && !calModal.hasAttribute('hidden')) closeCal(); });
   }
-  var calCursor = null; // viewed month
-  var MONTHS = (document.documentElement.lang==='es')
+  var calCursor = null;
+  var MONTHS = ES
     ? ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre']
     : ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  var T = (document.documentElement.lang==='es')
-    ? {pick:'Elige una fecha', slots:'horarios disponibles', confirm:'Reservar', booked:'Reserva simulada — conecta Cal.com para activarlo', meet:'Google Meet (link al reservar)'}
-    : {pick:'Pick a date', slots:'available times', confirm:'Confirm', booked:'Mock booking — connect Cal.com to go live', meet:'Google Meet (link sent on booking)'};
+  var T = ES
+    ? {slots:'horarios disponibles', confirm:'Reservar', name:'Nombre', email:'Email', wa:'WhatsApp (opcional)', send:'Solicitar llamada', back:'‹ Volver', done:'Solicitud enviada (demo)', donesub:'Conecta Cal.com + un backend de formulario para activarlo en vivo.', need:'Completa nombre y email'}
+    : {slots:'available times', confirm:'Confirm', name:'Name', email:'Email', wa:'WhatsApp (optional)', send:'Request call', back:'‹ Back', done:'Request sent (demo)', donesub:'Connect Cal.com + a form backend to make this live.', need:'Add your name and email'};
   function buildCal(){
     var grid = calModal.querySelector('.cal-grid'); if(!grid) return;
     var now = new Date(); if(!calCursor) calCursor = new Date(now.getFullYear(), now.getMonth(), 1);
     calModal.querySelector('#calMonth').textContent = MONTHS[calCursor.getMonth()] + ' ' + calCursor.getFullYear();
     grid.innerHTML = '';
     var first = new Date(calCursor.getFullYear(), calCursor.getMonth(), 1);
-    var startDow = (first.getDay()+6)%7; // Mon-first
+    var startDow = (first.getDay()+6)%7;
     var days = new Date(calCursor.getFullYear(), calCursor.getMonth()+1, 0).getDate();
     var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     for(var i=0;i<startDow;i++){ grid.appendChild(document.createElement('span')); }
     for(var d=1; d<=days; d++){
       var cell = document.createElement('button'); cell.className='cal-day'; cell.textContent=d;
-      var date = new Date(calCursor.getFullYear(), calCursor.getMonth(), d);
-      var dow = date.getDay();
+      var date = new Date(calCursor.getFullYear(), calCursor.getMonth(), d), dow = date.getDay();
       if(date < today || dow===0 || dow===6){ cell.disabled = true; }
-      else { (function(date){ cell.addEventListener('click', function(){
+      else { (function(date,cell){ cell.addEventListener('click', function(){
         grid.querySelectorAll('.cal-day.on').forEach(function(x){x.classList.remove('on');}); cell.classList.add('on'); showSlots(date);
-      }); })(date); }
+      }); })(date,cell); }
       grid.appendChild(cell);
     }
   }
+  function dateLabel(date){ return ES
+    ? date.toLocaleDateString('es-PE',{weekday:'long',day:'numeric',month:'long'})
+    : date.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'}); }
   function showSlots(date){
-    var head = calModal.querySelector('#calDay'); var list = calModal.querySelector('#calSlots');
-    var label = (document.documentElement.lang==='es')
-      ? date.toLocaleDateString('es-PE',{weekday:'long',day:'numeric',month:'long'})
-      : date.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
-    head.innerHTML = '<b>'+label+'</b><span>'+T.slots+'</span>';
+    var head = calModal.querySelector('#calDay'), list = calModal.querySelector('#calSlots');
+    head.innerHTML = '<b>'+dateLabel(date)+'</b><span>'+T.slots+'</span>';
     list.innerHTML = '';
     ['09:00','09:30','10:00','11:00','11:30','14:00','15:00','15:30','16:00','16:30'].forEach(function(t){
       var s = document.createElement('button'); s.className='cal-slot'; s.innerHTML='<span>'+t+'</span>';
-      s.addEventListener('click', function(){
-        if(s.classList.contains('confirm')){ s.outerHTML = '<div class="cal-done">✓ '+T.booked+'</div>'; return; }
-        list.querySelectorAll('.cal-slot').forEach(function(x){ x.classList.remove('confirm'); x.innerHTML='<span>'+x.dataset.t+'</span>'; });
-        s.dataset.t=t; s.classList.add('confirm'); s.innerHTML='<span>'+t+'</span><b>'+T.confirm+'</b>';
-      });
-      s.dataset.t=t; list.appendChild(s);
+      s.addEventListener('click', function(){ leadForm(date, t); });
+      list.appendChild(s);
+    });
+  }
+  // lead capture — feels like a real booking; mock submit
+  function leadForm(date, t){
+    var head = calModal.querySelector('#calDay'), list = calModal.querySelector('#calSlots');
+    head.innerHTML = '<b>'+dateLabel(date)+' · '+t+'</b><span>'+(bookingTopic||'15 min · Google Meet')+'</span>';
+    list.innerHTML =
+      '<button class="cal-link cal-backslots">'+T.back+'</button>'+
+      '<input class="cal-in" data-k="name" placeholder="'+T.name+'" autocomplete="name">'+
+      '<input class="cal-in" data-k="email" type="email" placeholder="'+T.email+'" autocomplete="email">'+
+      '<input class="cal-in" data-k="wa" placeholder="'+T.wa+'" autocomplete="tel">'+
+      '<button class="cal-submit">'+T.send+'</button>'+
+      '<p class="cal-err" hidden></p>';
+    list.querySelector('.cal-backslots').addEventListener('click', function(){ showSlots(date); });
+    list.querySelector('.cal-submit').addEventListener('click', function(){
+      var name=(list.querySelector('[data-k=name]').value||'').trim(), email=(list.querySelector('[data-k=email]').value||'').trim();
+      var err=list.querySelector('.cal-err');
+      if(!name || !/.+@.+\..+/.test(email)){ err.textContent=T.need; err.hidden=false; return; }
+      head.innerHTML = '<b>'+dateLabel(date)+' · '+t+'</b><span>'+name+'</span>';
+      list.innerHTML = '<div class="cal-done"><b>✓ '+T.done+'</b>'+T.donesub+'</div>';
     });
   }
   if(calModal){ calModal.querySelectorAll('.cal-nav').forEach(function(b){ b.addEventListener('click', function(){
@@ -178,4 +196,42 @@
     if(calCursor < new Date(now.getFullYear(), now.getMonth(), 1)) calCursor = new Date(now.getFullYear(), now.getMonth(), 1);
     buildCal();
   }); }); }
+
+  // ===== service tiles → book about that service =====
+  document.querySelectorAll('.tiles .tile').forEach(function(tile){
+    tile.setAttribute('role','button'); tile.tabIndex=0;
+    function go(){ var h=tile.querySelector('h3'); openCal(h?h.textContent.trim():''); }
+    tile.addEventListener('click', go);
+    tile.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); } });
+  });
+
+  // ===== work cases → detail modal built from the card itself =====
+  var caseModal = document.createElement('div'); caseModal.className='case-modal'; caseModal.hidden=true;
+  caseModal.innerHTML = '<div class="case-card"><button class="case-x icon-btn" aria-label="Close">✕</button><div class="case-media"></div><div class="case-body"><span class="case-tag"></span><h3></h3><p></p><div class="case-stat"></div><button class="btn btn-solid case-book">'+(ES?'Agendar sobre esto ':'Book a call about this ')+'<span class="arw">→</span></button></div></div>';
+  document.body.appendChild(caseModal);
+  function openCase(card){
+    var media = card.querySelector('.media');
+    caseModal.querySelector('.case-media').style.backgroundImage = media ? media.style.backgroundImage : '';
+    caseModal.querySelector('.case-tag').textContent = (card.querySelector('.tag')||{}).textContent||'';
+    caseModal.querySelector('.case-body h3').textContent = (card.querySelector('h3')||{}).textContent||'';
+    caseModal.querySelector('.case-body p').textContent = (card.querySelector('p')||{}).textContent||'';
+    caseModal.querySelector('.case-stat').textContent = (card.querySelector('.stat')||{}).textContent||'';
+    caseModal.querySelector('.case-book').onclick = function(){ closeCase(); openCal((card.querySelector('h3')||{}).textContent||''); };
+    caseModal.hidden=false; document.body.style.overflow='hidden'; requestAnimationFrame(function(){ caseModal.classList.add('open'); });
+  }
+  function closeCase(){ caseModal.classList.remove('open'); document.body.style.overflow=''; setTimeout(function(){ caseModal.hidden=true; }, 240); }
+  caseModal.addEventListener('click', function(e){ if(e.target===caseModal || e.target.closest('.case-x')) closeCase(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && !caseModal.hidden) closeCase(); });
+  document.querySelectorAll('.work .case').forEach(function(card){
+    card.setAttribute('role','button'); card.tabIndex=0;
+    card.addEventListener('click', function(){ openCase(card); });
+    card.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openCase(card); } });
+  });
+
+  // ===== "software we operate" strip → jump to Work =====
+  document.querySelectorAll('.strip .names span').forEach(function(n){
+    n.style.cursor='pointer'; n.tabIndex=0;
+    n.addEventListener('click', function(){ jumpTo('#work'); });
+    n.addEventListener('keydown', function(e){ if(e.key==='Enter'){ jumpTo('#work'); } });
+  });
 })();
