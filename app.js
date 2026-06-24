@@ -9,6 +9,48 @@
   function onScroll(){ if(window.scrollY > 40) header.classList.add('scrolled'); else header.classList.remove('scrolled'); }
   window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
 
+  // ===== page router — clicking nav shows the section directly (no full-page scroll) =====
+  // each "page" = which top-level blocks show + the Instrument-style light/dark theme it flips to
+  var GROUP = { hero:'home', strip:'home', services:'services', work:'work', process:'process', pricing:'pricing', care:'pricing', faq:'faq', contact:'contact' };
+  var THEME = { home:'dark', services:'light', work:'dark', process:'light', pricing:'dark', faq:'light', contact:'dark' };
+  var HASH2PAGE = { '':'home', '#':'home', '#top':'home', '#services':'services', '#work':'work', '#process':'process', '#pricing':'pricing', '#care':'pricing', '#faq':'faq', '#contact':'contact' };
+  var blocks = Array.prototype.slice.call(document.querySelectorAll('main>section, main>.strip'));
+  blocks.forEach(function(el){
+    var key = el.classList.contains('hero') ? 'hero' : (el.classList.contains('strip') ? 'strip' : el.id);
+    el.dataset.page = GROUP[key] || 'home';
+  });
+  document.body.classList.add('routed');
+
+  function applyTheme(t){ document.body.classList.toggle('light', t==='light'); var tb=document.querySelector('.theme-toggle'); if(tb) tb.textContent = t==='light' ? '☾' : '☀'; }
+
+  function showPage(name, push){
+    if(!THEME[name]) name = 'home';
+    blocks.forEach(function(el){ el.classList.toggle('page-on', el.dataset.page===name); });
+    applyTheme(THEME[name]);
+    // reveal everything on the now-visible page immediately
+    blocks.forEach(function(el){ if(el.dataset.page===name) el.querySelectorAll('.reveal').forEach(function(r){ r.classList.add('in'); }); });
+    // active nav state
+    document.querySelectorAll('.nav-links a, .navmenu a').forEach(function(a){
+      var h = a.getAttribute('href')||''; a.classList.toggle('active', HASH2PAGE[h]===name && name!=='home');
+    });
+    window.scrollTo(0,0); header.classList.remove('scrolled');
+    var hash = name==='home' ? '#top' : '#'+(name==='pricing'?'pricing':name);
+    if(push){ try{ history.pushState({p:name}, '', hash); }catch(e){ location.hash = hash; } }
+  }
+
+  // intercept every in-page anchor → route instead of scroll
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var page = HASH2PAGE[a.getAttribute('href')];
+      if(page===undefined) return; // unknown anchor: let it behave normally
+      e.preventDefault();
+      var menu = document.querySelector('.navmenu'); if(menu){ menu.classList.remove('open'); document.body.style.overflow=''; }
+      showPage(page, true);
+    });
+  });
+  window.addEventListener('popstate', function(){ showPage(HASH2PAGE[location.hash]||'home', false); });
+  showPage(HASH2PAGE[location.hash]||'home', false);
+
   // scroll reveal
   var io = new IntersectionObserver(function(es){
     es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
@@ -54,12 +96,9 @@
     menu.querySelectorAll('a, .close').forEach(function(a){ a.addEventListener('click', closeMenu); });
   }
 
-  // theme toggle (persist)
+  // manual theme toggle — overrides the current page theme until you navigate
   var tbtn = document.querySelector('.theme-toggle');
-  function applyTheme(t){ document.body.classList.toggle('light', t==='light'); if(tbtn) tbtn.textContent = t==='light' ? '☾' : '☀'; }
-  try{ applyTheme(localStorage.getItem('forma-theme')||'dark'); }catch(e){}
   if(tbtn) tbtn.addEventListener('click', function(){
-    var t = document.body.classList.contains('light') ? 'dark' : 'light';
-    applyTheme(t); try{ localStorage.setItem('forma-theme', t); }catch(e){}
+    applyTheme(document.body.classList.contains('light') ? 'dark' : 'light');
   });
 })();
