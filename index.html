@@ -6,7 +6,7 @@
 <title>Forma — Software that makes companies money</title>
 <meta name="description" content="Websites, web apps, and custom software. Fixed-price, fast, and proven on real businesses we run ourselves.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230A0A0A'/%3E%3Crect x='11' y='11' width='10' height='10' rx='2' fill='%23fff'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="style.css?v=16">
+<link rel="stylesheet" href="style.css?v=17">
 </head>
 <body data-active="convert">
 
@@ -178,6 +178,34 @@
 </section>
 </main>
 
+<div class="cal-modal" hidden>
+  <div class="cal-card">
+    <button class="cal-x icon-btn" aria-label="Close">✕</button>
+    <div class="cal-side">
+      <span class="cal-badge">Demo · Cal.com</span>
+      <div class="cal-host"><span class="dot"></span>Forma</div>
+      <h3>15-min intro call</h3>
+      <ul class="cal-facts">
+        <li><span>⏱</span> 15 minutes</li>
+        <li><span>📹</span> Google Meet (link sent on booking)</li>
+        <li><span>🌎</span> America/Lima · GMT-5</li>
+      </ul>
+      <p>Tell us what you want to build. We'll bring a fixed price and a timeline to the call.</p>
+    </div>
+    <div class="cal-pick">
+      <div class="cal-cal">
+        <div class="cal-head"><b id="calMonth"></b><span class="cal-navs"><button class="cal-nav" data-d="-1" aria-label="Prev">‹</button><button class="cal-nav" data-d="1" aria-label="Next">›</button></span></div>
+        <div class="cal-dow"><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span></div>
+        <div class="cal-grid" id="calGrid"></div>
+      </div>
+      <div class="cal-slots">
+        <div class="cal-slots-head" id="calDay"><b>Pick a date</b><span>available times</span></div>
+        <div class="cal-slot-list" id="calSlots"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <footer>
   <div class="wrap">
     <a class="brand" href="#top"><span class="dot"></span>Forma <small>(working name)</small></a>
@@ -186,6 +214,6 @@
   </div>
 </footer>
 
-<script src="app.js?v=16"></script>
+<script src="app.js?v=17"></script>
 </body>
 </html>

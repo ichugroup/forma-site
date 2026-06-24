@@ -6,7 +6,7 @@
 <title>Forma — Software que hace ganar a tu negocio</title>
 <meta name="description" content="Webs, aplicaciones web y software a medida. Precio fijo, rápido y probado en negocios reales que operamos.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230A0A0A'/%3E%3Crect x='11' y='11' width='10' height='10' rx='2' fill='%23fff'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="style.css?v=16">
+<link rel="stylesheet" href="style.css?v=17">
 </head>
 <body data-active="convert">
 
@@ -178,6 +178,34 @@
 </section>
 </main>
 
+<div class="cal-modal" hidden>
+  <div class="cal-card">
+    <button class="cal-x icon-btn" aria-label="Cerrar">✕</button>
+    <div class="cal-side">
+      <span class="cal-badge">Demo · Cal.com</span>
+      <div class="cal-host"><span class="dot"></span>Forma</div>
+      <h3>Llamada de 15 min</h3>
+      <ul class="cal-facts">
+        <li><span>⏱</span> 15 minutos</li>
+        <li><span>📹</span> Google Meet (link al reservar)</li>
+        <li><span>🌎</span> América/Lima · GMT-5</li>
+      </ul>
+      <p>Cuéntanos qué quieres construir. Llevamos un precio fijo y un plazo a la llamada.</p>
+    </div>
+    <div class="cal-pick">
+      <div class="cal-cal">
+        <div class="cal-head"><b id="calMonth"></b><span class="cal-navs"><button class="cal-nav" data-d="-1" aria-label="Anterior">‹</button><button class="cal-nav" data-d="1" aria-label="Siguiente">›</button></span></div>
+        <div class="cal-dow"><span>Lu</span><span>Ma</span><span>Mi</span><span>Ju</span><span>Vi</span><span>Sa</span><span>Do</span></div>
+        <div class="cal-grid" id="calGrid"></div>
+      </div>
+      <div class="cal-slots">
+        <div class="cal-slots-head" id="calDay"><b>Elige una fecha</b><span>horarios disponibles</span></div>
+        <div class="cal-slot-list" id="calSlots"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <footer>
   <div class="wrap">
     <a class="brand" href="#top"><span class="dot"></span>Forma <small>(nombre provisional)</small></a>
@@ -186,6 +214,6 @@
   </div>
 </footer>
 
-<script src="app.js?v=16"></script>
+<script src="app.js?v=17"></script>
 </body>
 </html>

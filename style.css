@@ -18,14 +18,8 @@ body.light{ --bg:#FFFFFF; --bg-pure:#fff; --ink:#070708; --ink-muted:rgba(7,7,8,
 html{scroll-behavior:auto}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;letter-spacing:.005em;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background-color .35s ease-in-out,color .35s ease-in-out}
 
-/* ===== page router — each nav target is its own scrollable screen (Instrument model) ===== */
-body.routed main>section,body.routed main>.strip{display:none}
-body.routed main>section{padding-top:clamp(116px,15vh,168px)!important;padding-bottom:clamp(72px,11vw,128px);min-height:100vh}
-body.routed main>section.page-on{display:block}
-body.routed main>.strip.page-on{display:block}
-body.routed main>.hero.page-on{display:flex;min-height:calc(100vh - 60px)}
-/* page-load fade — feels like a website loading a page, not a scroll */
-body.routed main{transition:opacity .3s ease,transform .3s ease}
+/* ===== full continuous scroll; nav buttons fade-jump to a section (no slow crawl) ===== */
+body.routed main{transition:opacity .26s ease,transform .26s ease}
 body.routed main.switching{opacity:0;transform:translateY(8px)}
 .nav-links a.active,.navmenu a.active{color:var(--ink)}
 .nav-links a.active{position:relative}
@@ -186,3 +180,47 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
 html.js .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
 html.js .reveal.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){html.js .reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+
+/* ===== Cal.com-style booking modal ===== */
+.cal-modal{position:fixed;inset:0;z-index:300;display:grid;place-items:center;padding:24px;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);opacity:0;transition:opacity .26s var(--ease)}
+.cal-modal.open{opacity:1}
+.cal-modal[hidden]{display:none}
+.cal-card{position:relative;width:min(880px,100%);max-height:92vh;overflow:auto;display:grid;grid-template-columns:300px 1fr;background:var(--bg-pure);color:var(--ink);border:1px solid var(--hairline);border-radius:18px;transform:translateY(12px) scale(.99);transition:transform .26s var(--ease)}
+.cal-modal.open .cal-card{transform:none}
+.cal-x{position:absolute;top:14px;right:14px;z-index:2}
+.cal-side{padding:30px;border-right:1px solid var(--hairline);display:flex;flex-direction:column;gap:14px}
+.cal-badge{align-self:flex-start;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-dim);border:1px solid var(--hairline);padding:5px 11px;border-radius:50px}
+.cal-host{display:flex;align-items:center;gap:8px;font-weight:600;color:var(--ink-muted);font-size:14px}
+.cal-host .dot{width:8px;height:8px;border-radius:2px;background:var(--ink)}
+.cal-side h3{font-family:var(--serif);font-weight:400;font-size:30px;letter-spacing:-.02em}
+.cal-facts{list-style:none;display:flex;flex-direction:column;gap:11px;margin-top:4px}
+.cal-facts li{display:flex;gap:10px;align-items:center;font-size:14px;color:var(--ink-muted)}
+.cal-facts li span{width:18px;text-align:center;opacity:.85}
+.cal-side p{font-size:13.5px;color:var(--ink-dim);margin-top:auto;line-height:1.55}
+.cal-pick{display:grid;grid-template-columns:1fr 220px;min-height:380px}
+.cal-cal{padding:26px 24px}
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.cal-head b{font-size:16px;font-weight:600}
+.cal-navs{display:flex;gap:6px}
+.cal-nav{width:32px;height:32px;border-radius:8px;border:1px solid var(--hairline);background:none;color:var(--ink);cursor:pointer;font-size:18px;line-height:1;transition:.2s var(--ease)}
+.cal-nav:hover{background:var(--ink);color:var(--bg-pure)}
+.cal-dow,.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-dow{margin-bottom:6px}
+.cal-dow span{text-align:center;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-dim)}
+.cal-day{aspect-ratio:1;border:none;border-radius:9px;background:var(--ghost);color:var(--ink);font-family:var(--sans);font-size:14px;font-weight:500;cursor:pointer;transition:.18s var(--ease)}
+.cal-day:hover:not(:disabled){background:var(--ink);color:var(--bg-pure)}
+.cal-day:disabled{opacity:.28;cursor:default;background:transparent}
+.cal-day.on{background:var(--ink);color:var(--bg-pure);box-shadow:0 0 0 2px var(--bg-pure),0 0 0 4px var(--ink)}
+.cal-slots{border-left:1px solid var(--hairline);padding:26px 18px;display:flex;flex-direction:column}
+.cal-slots-head{margin-bottom:14px}
+.cal-slots-head b{display:block;font-size:14px;font-weight:600;text-transform:capitalize}
+.cal-slots-head span{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-dim)}
+.cal-slot-list{display:flex;flex-direction:column;gap:8px;overflow:auto}
+.cal-slot{display:flex;align-items:center;gap:8px;border:1px solid var(--hairline);background:none;color:var(--ink);border-radius:9px;padding:11px 12px;font-family:var(--sans);font-size:14px;font-weight:500;cursor:pointer;transition:.18s var(--ease)}
+.cal-slot:hover{border-color:var(--ink)}
+.cal-slot span{flex:1;text-align:left}
+.cal-slot.confirm{padding:0;border:none;gap:0}
+.cal-slot.confirm span{background:var(--ghost);border:1px solid var(--hairline);border-radius:9px 0 0 9px;padding:11px 12px}
+.cal-slot.confirm b{flex:1;background:var(--ink);color:var(--bg-pure);border-radius:0 9px 9px 0;padding:11px 12px;text-align:center}
+.cal-done{background:var(--ghost);border:1px solid var(--hairline);border-radius:9px;padding:12px;font-size:13px;color:var(--ink-muted);line-height:1.4}
+@media(max-width:720px){.cal-card{grid-template-columns:1fr;max-height:88vh}.cal-side{border-right:none;border-bottom:1px solid var(--hairline)}.cal-pick{grid-template-columns:1fr}.cal-slots{border-left:none;border-top:1px solid var(--hairline)}.cal-side p{margin-top:8px}}
