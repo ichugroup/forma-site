@@ -6,7 +6,7 @@
 <title>Forma — Software que hace ganar a tu negocio</title>
 <meta name="description" content="Webs, aplicaciones web y software a medida. Precio fijo, rápido y probado en negocios reales que operamos.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230A0A0A'/%3E%3Crect x='11' y='11' width='10' height='10' rx='2' fill='%23fff'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="style.css?v=19">
+<link rel="stylesheet" href="style.css?v=20">
 </head>
 <body data-active="convert">
 
@@ -214,6 +214,21 @@
   </div>
 </footer>
 
-<script src="app.js?v=19"></script>
+<!-- ===== GO LIVE: reserva real con Cal.com — descomenta cuando exista la cuenta cal.com =====
+  1. cuenta cal.com (gratis) → tipo de evento "15min" → Ubicación = Google Meet → zona America/Lima.
+  2. Reemplaza "forma/15min" con tu handle real y descomenta este bloque.
+  3. En app.js comenta la llamada `openCal(...)` para que los botones usen el popup de Cal.
+<script src="https://app.cal.com/embed/embed.js" async></script>
+<script>
+  Cal("init","15min",{origin:"https://cal.com"});
+  Cal.ns["15min"]("ui",{theme:"dark",cssVarsPerTheme:{dark:{"cal-brand":"#e8e8e9"},light:{"cal-brand":"#070708"}},layout:"month_view"});
+  document.querySelectorAll('a[href="#contact"], a[href*="wa.me"]').forEach(function(a){
+    a.setAttribute('data-cal-link','forma/15min');
+    a.setAttribute('data-cal-namespace','15min');
+    a.setAttribute('data-cal-config','{"layout":"month_view","theme":"dark"}');
+  });
+</script>
+===== END GO LIVE ===== -->
+<script src="app.js?v=20"></script>
 </body>
 </html>
