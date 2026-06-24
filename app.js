@@ -4,16 +4,22 @@
   // safety: if anything goes wrong, reveal everything after 2.5s so the page is never blank
   setTimeout(function(){ document.querySelectorAll('.reveal:not(.in)').forEach(function(el){ el.classList.add('in'); }); }, 2500);
 
-  // nav restyle + ticker hide on scroll
+  // ===== page router — Instrument model: nav loads a page (no scroll), each page
+  //        scrolls on its own and flips the bg light<->dark via themed bands =====
+  var main = document.querySelector('main');
   var header = document.querySelector('header');
-  function onScroll(){ if(window.scrollY > 40) header.classList.add('scrolled'); else header.classList.remove('scrolled'); }
-  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
-
-  // ===== page router — clicking nav shows the section directly (no full-page scroll) =====
-  // each "page" = which top-level blocks show + the Instrument-style light/dark theme it flips to
   var GROUP = { hero:'home', strip:'home', services:'services', work:'work', process:'process', pricing:'pricing', care:'pricing', faq:'faq', contact:'contact' };
-  var THEME = { home:'dark', services:'light', work:'dark', process:'light', pricing:'dark', faq:'light', contact:'dark' };
   var HASH2PAGE = { '':'home', '#':'home', '#top':'home', '#services':'services', '#work':'work', '#process':'process', '#pricing':'pricing', '#care':'pricing', '#faq':'faq', '#contact':'contact' };
+  // per page: ordered themed bands you scroll through (top band = the colour the page opens on)
+  var BANDS = {
+    home:    [['.hero','dark'],['.strip','light']],
+    services:[['#services .sec-head','dark'],['#services .tiles','light']],
+    work:    [['#work .sec-head','light'],['#work .work','dark']],
+    process: [['#process .sec-head','dark'],['#process .steps','light']],
+    pricing: [['#pricing .sec-head','light'],['#pricing .tiers','dark'],['#care .care','light']],
+    faq:     [['#faq .sec-head','dark'],['#faq .faq','light']],
+    contact: [['#contact','dark']]
+  };
   var blocks = Array.prototype.slice.call(document.querySelectorAll('main>section, main>.strip'));
   blocks.forEach(function(el){
     var key = el.classList.contains('hero') ? 'hero' : (el.classList.contains('strip') ? 'strip' : el.id);
@@ -21,35 +27,64 @@
   });
   document.body.classList.add('routed');
 
+  var activeBands = [], manualTheme = null;
   function applyTheme(t){ document.body.classList.toggle('light', t==='light'); var tb=document.querySelector('.theme-toggle'); if(tb) tb.textContent = t==='light' ? '☾' : '☀'; }
 
-  function showPage(name, push){
-    if(!THEME[name]) name = 'home';
-    blocks.forEach(function(el){ el.classList.toggle('page-on', el.dataset.page===name); });
-    applyTheme(THEME[name]);
-    // reveal everything on the now-visible page immediately
-    blocks.forEach(function(el){ if(el.dataset.page===name) el.querySelectorAll('.reveal').forEach(function(r){ r.classList.add('in'); }); });
-    // active nav state
+  // scroll-driven flip: the band that has reached the viewport's upper-third sets the bg
+  function bandScan(){
+    if(manualTheme || !activeBands.length) return;
+    var c = window.innerHeight * 0.42, pick = activeBands[0];
+    for(var i=0;i<activeBands.length;i++){
+      if(activeBands[i].el.getBoundingClientRect().top <= c) pick = activeBands[i]; else break;
+    }
+    applyTheme(pick.theme);
+  }
+  function onScroll(){ if(window.scrollY > 40) header.classList.add('scrolled'); else header.classList.remove('scrolled'); bandScan(); }
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  function bindBands(name){
+    activeBands = (BANDS[name]||[]).map(function(b){ return {el:document.querySelector(b[0]), theme:b[1]}; }).filter(function(b){ return b.el; });
+  }
+
+  function render(name, push){
+    if(!BANDS[name]) name = 'home';
+    manualTheme = null;
+    blocks.forEach(function(el){ el.classList.toggle('page-on', el.dataset.page===name); el.querySelectorAll('.reveal').forEach(function(r){ if(el.dataset.page===name) r.classList.add('in'); }); });
+    bindBands(name);
+    applyTheme(activeBands.length ? activeBands[0].theme : 'dark');
     document.querySelectorAll('.nav-links a, .navmenu a').forEach(function(a){
       var h = a.getAttribute('href')||''; a.classList.toggle('active', HASH2PAGE[h]===name && name!=='home');
     });
     window.scrollTo(0,0); header.classList.remove('scrolled');
-    var hash = name==='home' ? '#top' : '#'+(name==='pricing'?'pricing':name);
+    var hash = name==='home' ? '#top' : '#'+name;
     if(push){ try{ history.pushState({p:name}, '', hash); }catch(e){ location.hash = hash; } }
   }
 
-  // intercept every in-page anchor → route instead of scroll
+  // navigate with a real page-load fade so it feels like a site, not a scroll
+  var switching = false;
+  function showPage(name, push){
+    if(switching) return;
+    var current = (document.querySelector('main>section.page-on')||{}).dataset;
+    if(current && current.page===(BANDS[name]?name:'home') && push){ window.scrollTo(0,0); return; }
+    switching = true; main.classList.add('switching');
+    setTimeout(function(){
+      render(name, push);
+      requestAnimationFrame(function(){ main.classList.remove('switching'); switching = false; });
+    }, 180);
+  }
+
+  // intercept every in-page anchor → route (page swap) instead of scroll
   document.querySelectorAll('a[href^="#"]').forEach(function(a){
     a.addEventListener('click', function(e){
       var page = HASH2PAGE[a.getAttribute('href')];
-      if(page===undefined) return; // unknown anchor: let it behave normally
+      if(page===undefined) return;
       e.preventDefault();
       var menu = document.querySelector('.navmenu'); if(menu){ menu.classList.remove('open'); document.body.style.overflow=''; }
       showPage(page, true);
     });
   });
-  window.addEventListener('popstate', function(){ showPage(HASH2PAGE[location.hash]||'home', false); });
-  showPage(HASH2PAGE[location.hash]||'home', false);
+  window.addEventListener('popstate', function(){ render(HASH2PAGE[location.hash]||'home', false); });
+  render(HASH2PAGE[location.hash]||'home', false); // first paint: no fade
 
   // scroll reveal
   var io = new IntersectionObserver(function(es){
@@ -96,9 +131,10 @@
     menu.querySelectorAll('a, .close').forEach(function(a){ a.addEventListener('click', closeMenu); });
   }
 
-  // manual theme toggle — overrides the current page theme until you navigate
+  // manual theme toggle — pins a colour (overrides scroll flip) until you navigate
   var tbtn = document.querySelector('.theme-toggle');
   if(tbtn) tbtn.addEventListener('click', function(){
-    applyTheme(document.body.classList.contains('light') ? 'dark' : 'light');
+    manualTheme = document.body.classList.contains('light') ? 'dark' : 'light';
+    applyTheme(manualTheme);
   });
 })();
